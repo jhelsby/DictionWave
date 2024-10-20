@@ -45,19 +45,21 @@ def is_unseen(word):
 
 def is_valid_regex(word):
     """
-    Filter out words that start or end with punctuation, as 
+    - Filter out words that contain no English alphabet characters.
+    - Filter out words that start or end with punctuation, as 
     these are likely duplicates of words without that punctuation.
-    Filter out words that have certain punctuation marks in the middle,
+    - Filter out words that have certain punctuation marks in the middle,
     as these may be chunks of sentences (e.g. "easily.Thanks").
+    - Filter out strings of the form num-num or num-num-num, e.g. 2-1, 14-2-86.
     """
-    contains_english_letters_or_numbers = any(char.isascii() and (char.isalpha() or char.isdigit()) for char in word)
+    contains_english_letters = any(char.isascii() and char.isalpha() for char in word)
     punctuation_letters = re.compile(r'[,.@!%-]+[a-zA-Z0-9]*')
     letters_punctuation = re.compile(r'[a-zA-Z0-9]*[,.@!%-]+')
     letters_punctuationnodash_letters = re.compile(r'[a-zA-Z0-9]+[.,@!%]+[a-zA-Z0-9]+')
     sports_scores = re.compile(r'[0-9]+-[0-9]+')
     dates_and_scores = re.compile(r'[0-9]+[./-][0-9]+[./-][0-9]+')
 
-    return contains_english_letters_or_numbers and punctuation_letters.fullmatch(word) is None and letters_punctuation.fullmatch(word) is None and letters_punctuationnodash_letters.fullmatch(word) is None and sports_scores.fullmatch(word) is None and dates_and_scores.fullmatch(word) is None
+    return contains_english_letters and punctuation_letters.fullmatch(word) is None and letters_punctuation.fullmatch(word) is None and letters_punctuationnodash_letters.fullmatch(word) is None and sports_scores.fullmatch(word) is None and dates_and_scores.fullmatch(word) is None
 
 def is_valid_word(word):
     """
