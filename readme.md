@@ -1,18 +1,12 @@
 # DictionWave 
 
-DictionWave is a word-discovery tool that lets you surf across  the world of English language and meaning. Here's how to use it:
+DictionWave is a word-discovery tool that lets you surf across the world of English language and meaning, using the power of word embeddings. It uses word vector similarities, a rarity parameter, and some randomness, to facilitate word discovery.
 
-1. Download a word vectors file and set it up in the repository.
+Please see the demonstration video below for an example of what DictionWave can do.
 
-2. Run DictionWave, and select:
-    * the size of the vocabulary you wish to load from the vectors file.
-    * how many words you would like to be shown for each input.
-    * a "rarity boost" factor - this will determine how common or rare the words you are shown will be.
-    * a "randomness" factor - to mix up the exploration some more, and show you words you might not have seen before.
+https://private-user-images.githubusercontent.com/11036537/378196693-793a063b-b767-4621-bd6f-06c004b7c604.mp4
 
-3. Enter whichever words you are curious to dive into further. 
-
-I hope you enjoy exploring the English language with DictionWave! Here's an example of what it can do, with a 100,000 word vocabulary, 50 words per query, a rarity boost factor of 5, and a randomness factor of 0. 
+Alternatively, here is some terminal output from the main implementation file `similarity_core.py`, with a 100,000 word vocabulary, 50 words per query, a "rarity boost" factor of 5, and a randomness factor of 0. 
 
 ```
 > Enter a word: Shakespeare
@@ -43,9 +37,9 @@ Polonius Coriolanus Rosaline Hazlitt Albee
 Metamorphoses Pygmalion Moby-Dick Malory Banquo
 ```
 
-Please see below for more detailed instructions on how to set up this project. I also plan to deploy DictionWave as a self-contained web application in the near future.
+I hope you enjoy exploring the English language with DictionWave! For implementation details, please see [`similarity_core.py`](./similarity_core.py). If you want to set it up for yourself, please see the instructions below. I plan on making the web application shown in the video above publicly accessible as soon as I can.
 
-## Setup
+## Development Setup
 
 1. Open your terminal and clone this repostory:
     ```
@@ -53,17 +47,26 @@ Please see below for more detailed instructions on how to set up this project. I
     cd DictionWave
     ```
 
-    Install the packages listed in `requirements.txt`.
+    Install the required packages:
+    ```
+    pip install -r requirements.txt
+    ```
 
-2. Download a file of word vectors, and place it at the repository root. I used `crawl-300d-2M.vec`, a freely available collection of 2 million word vectors trained on [Common Crawl](https://en.wikipedia.org/wiki/Common_Crawl). You can download the model [here](https://fasttext.cc/docs/en/english-vectors.html).
+2. Download a file of word vectors, where each line is of the format `[word] [vector]` (e.g. `use -0.1545 0.0836  [...] 0.1351`), and place it at the repository root. 
+
+    * I used `crawl-300d-2M.vec`, a freely available collection of 2 million word vectors trained on [Common Crawl](https://en.wikipedia.org/wiki/Common_Crawl). You can download the model [here](https://fasttext.cc/docs/en/english-vectors.html).
 
 3. (Optional.) Create a `blacklist.txt` file to filter out words from your data source. Since `crawl-300d-2M.vec` is raw research data collected from the web, there are a number of explicit and derogatory words included in the word vectors which you may not wish to appear when running DictionWave.
 
-    I manually assembled my own blacklist file, but since it is primarily a list of slurs and obscenities I did not wish to host it in this repository. If you would like to use it, please contact me.
+    *  I manually assembled my own blacklist file, but since it is primarily a list of slurs and obscenities I did not wish to host it in this repository. If you would like to use it, please contact me.
 
-4. Run `python filter_embeddings.py` to filter out duplicates, redundant words, and any blacklisted words from your dataset. You may need to change the `input_file` variable name to match your word vectors filename.
+4. Run `python filter_embeddings.py`. First, this filters out duplicates, redundant words, and any blacklisted words from your dataset. Then, it saves the embeddings to a `embeddings.pkl` file for later use. You may need to change the `input_file` variable name to match your word vectors filename.
 
-5. Run `python main.py` and follow the instructions it provides.
+    * My combination of filters reduced the 2 million word source file to 1,240,641 words at the last count. I am going to continuing trying to bring this number down, as there is a still lot of redundancy in there, such as misspellings. A cleaner dataset will let DictionWave run faster and return better results.
+    
+    * (Optional) If you run this script yourself, you may wish to set `total_number_of_words` in `similarity_core.py` to be equal to the number of words `filter_embeddings.py` tells you are left in the input, so the loading bars are configured correctly. Precomputing this number saves time when loading the embeddings later on.
+
+5. To run the program in your terminal, run `python similarity_core.py` and follow the instructions it provides. To run the program as a Flask web application, run `python app.py`.
 
 ## References
 
