@@ -5,10 +5,13 @@ import random
 embeddings_file = "filtered_crawl-300d-2M.vec"
 
 # Number of lines in my filtered_crawl-300d-2M.vec file - precomputed.
-total_number_of_words = 1248198
+total_number_of_words = 1247074
 
 # Function to load the top number_of_words word vectors from the .vec file
 def load_embeddings(number_of_words):
+
+    if number_of_words is None:
+        number_of_words = total_number_of_words
 
     with open(embeddings_file, 'r', encoding='utf-8') as f:
         # Skip the first line with metadata

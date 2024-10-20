@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import pickle
-from similarity_core import load_embeddings, most_similar
+from similarity_core import most_similar
 import random
 
 rarity_boost = 5.0
