@@ -68,6 +68,8 @@ I hope you enjoy exploring the English language with DictionWave! For implementa
 
 5. To run the program in your terminal, run `python similarity_core.py` and follow the instructions it provides. To run the program as a Flask web application, run `python app.py`.
 
+    * To make running the web app easier on servers with limited memory, I have included a `embeddings_lite.pkl` file in this repository which is just under GitHub's 100MB limit and contains 74,000 word embeddings.
+
 ## References
 
 I used [fastText](https://fasttext.cc/), the provider of `crawl-300d-2M.vec`, to create DictionWave. As per the request of the fastText project, I would therefore like to cite the following paper:
