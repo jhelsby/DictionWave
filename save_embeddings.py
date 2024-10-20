@@ -2,7 +2,7 @@ from similarity_core import load_embeddings
 import pickle
 
 def main():
-    num_words_to_load = 70000
+    num_words_to_load = None
 
     word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings(num_words_to_load)
 

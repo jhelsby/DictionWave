@@ -9,13 +9,13 @@ randomness = 1.0
 
 app = Flask(__name__)
 
-local_embeddings_filepath = 'embeddings.pkl'
+local_embeddings_filepath = 'embeddings_lite.pkl'
 dotenv.load_dotenv()
 
-if os.path.exists(local_embeddings_filepath):
-    print('downloading')
+if not os.path.exists(local_embeddings_filepath):
+    print('Downloading embeddings...')
     gdown.download(f'https://drive.google.com/uc?id={os.getenv("GDRIVE_EMBEDDINGS_FILE_ID")}', 'embeddings.pkl', quiet=False)
-    print("done")
+    print("Embeddings downloaded.")
 
 with open('embeddings.pkl', 'rb') as file:
         word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word  = pickle.load(file)
