@@ -58,7 +58,7 @@ def index():
             similar_words = ["Word not found in embeddings."]
     
     else: 
-        example_words = random.sample(list(word_list), min(len(word_list), 10))
+        example_words = random.sample(list(word_list), min(len(word_list), 15))
 
     return render_template('index.html', similar_words=similar_words, similar_words_boosted=similar_words_boosted, last_word=word,example_words=example_words)
 

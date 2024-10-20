@@ -22,6 +22,11 @@
             align-items: center;
         }
 
+        a {
+            color: rgb(198, 198, 198);
+            text-decoration: none;
+        }
+
         .search-container {
             display: flex;
             align-items: center;
@@ -61,15 +66,21 @@
             color: rgb(198, 198, 198);
         }
 
+        .welcome {
+            margin-top: 40px;
+            margin-left: 160px;
+            margin-right: 160px;
+        }
+
         .example {
-            margin-top: 20px;
+            margin: 40px 60px;
         }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <h1>DictionWave</h1>
+        <h1><a href="{{ url_for('index') }}">DictionWave</a></h1>
         <div class="search-container">
             <form method="post">
                 <input type="text" name="word" placeholder="Enter a word" {% if last_word %} value="{{ last_word }}" {%
@@ -117,12 +128,24 @@
     </div>
 
     {% if example_words %}
-    <div class="example">
-        <h2>Welcome! Start exploring:</h2>
-        <div>
-            {% for word in example_words %}
-            <span class="word" onclick="submitWord('{{ word }}')">{{ word }}</span>
-            {% endfor %}
+    <div>
+        <div class="welcome">
+            <h2>Welcome!</h2>
+            <p>
+                DictionWave lets you explore the English language using the power of word embeddings. Here are a few
+                ideas
+                to get you started - just click a word to begin!
+            </p>
+            <div class="example">
+                {% for word in example_words %}
+                <span class="word" onclick="submitWord('{{ word }}')">{{ word }}</span>
+                {% endfor %}
+            </div>
+            <p>
+                This is an open-source project licensed under the MIT License. Its GitHub repository can be found
+                <u><a href="https://github.com/jhelsby/DictionWave">here</a></u>, along with further details on how it
+                works. Many thanks for visiting!
+            </p>
         </div>
     </div>
     {% endif %}
