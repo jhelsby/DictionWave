@@ -64,13 +64,17 @@
             <p>
                 DictionWave lets you explore the English language using the power of word embeddings. Here are a few
                 ideas
-                to get you started - just click a word to begin your journey.
+                to get you started &ndash; just click a word to begin your journey. Each new word in the lists that
+                follow
+                is a link to more. Explore to your heart&apos;s content!
             </p>
             <div class="example">
                 {% for word in example_words %}
                 <span class="word" onclick="submitWord('{{ word }}')">{{ word }}</span>
                 {% endfor %}
             </div>
+            <p>The number boxes above allow for some additional fine-tuning. Output Size determines how many words are
+                returned from each query. Rarity Boost </p>
             <p>
                 This is an open-source project licensed under the MIT License. Its GitHub repository can be found
                 <u><a href="https://github.com/jhelsby/DictionWave">here</a></u>, along with further details on how it
