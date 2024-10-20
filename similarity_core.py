@@ -63,7 +63,7 @@ def apply_rarity_boost(similarities, rarity_boost):
     return similarities * rarity_weights
 
 # Function to find the most similar words both with and without rarity boost
-def most_similar(word, word_list, word_vectors, lowercase_word_to_index, rarity_boost=5.0, randomness=0.0, num_words_to_output=200):
+def most_similar(word, word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word, rarity_boost=5.0, randomness=0.0, num_words_to_output=200):
 
     word_index = lowercase_word_to_index.get(word)
 
@@ -89,8 +89,8 @@ def most_similar(word, word_list, word_vectors, lowercase_word_to_index, rarity_
     random.shuffle(most_similar_boosted_idx)
     
     # Select the top 'num_words_to_output' from the shuffled indices
-    most_similar_words = [word_list[i] for i in most_similar_idx[:num_words_to_output]]
-    most_similar_words_boosted = [word_list[i] for i in most_similar_boosted_idx[:num_words_to_output]]
+    most_similar_words = [lowercase_word_to_word[word_list[i]] for i in most_similar_idx[:num_words_to_output]]
+    most_similar_words_boosted = [lowercase_word_to_word[word_list[i]] for i in most_similar_boosted_idx[:num_words_to_output]]
     
     return most_similar_words, most_similar_words_boosted
 
@@ -136,7 +136,7 @@ if __name__ == "__main__":
             print("Please enter a word.\n")
             continue
 
-        most_similar_words, most_similar_boosted = most_similar(word, word_list, word_vectors, lowercase_word_to_index, rarity_boost=rarity_boost, randomness=randomness)
+        most_similar_words, most_similar_boosted = most_similar(word, word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word, rarity_boost=rarity_boost, randomness=randomness)
 
         if not most_similar_words:
             continue

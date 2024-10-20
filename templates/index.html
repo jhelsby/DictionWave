@@ -9,7 +9,6 @@
         body {
             margin: 20px;
             background-color: rgb(31, 31, 31);
-            /* Set background to black */
             color: rgb(198, 198, 198);
         }
 
@@ -73,7 +72,8 @@
         <h1>DictionWave</h1>
         <div class="search-container">
             <form method="post">
-                <input type="text" name="word" placeholder="Enter a word" required>
+                <input type="text" name="word" placeholder="Enter a word" {% if last_word %} value="{{ last_word }}" {%
+                    endif %} required>
                 <button type="submit">Explore</button>
                 <div class="input-container">
                     <label for="num_words">Output Size:</label>
@@ -81,11 +81,11 @@
                         value="{{ request.form.num_words or 80 }}" required>
 
                     <label for="rarity_boost">Rarity Boost:</label>
-                    <input type="number" id="rarity_boost" name="rarity_boost" placeholder="R" step="0.1"
+                    <input type="number" id="rarity_boost" name="rarity_boost" placeholder="R" step="1.0"
                         value="{{ request.form.rarity_boost or 5.0 }}" required>
 
                     <label for="randomness">Randomness:</label>
-                    <input type="number" id="randomness" name="randomness" placeholder="Rand" min="0" step="0.1"
+                    <input type="number" id="randomness" name="randomness" placeholder="Rand" min="0" step="1.0"
                         value="{{ request.form.randomness or 0.0 }}" required>
                 </div>
             </form>
