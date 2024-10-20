@@ -53,13 +53,22 @@ def is_valid_regex(word):
     - Filter out strings of the form num-num or num-num-num, e.g. 2-1, 14-2-86.
     """
     contains_english_letters = any(char.isascii() and char.isalpha() for char in word)
+
     punctuation_letters = re.compile(r'[,.@!%-]+[a-zA-Z0-9]*')
     letters_punctuation = re.compile(r'[a-zA-Z0-9]*[,.@!%-]+')
     letters_punctuationnodash_letters = re.compile(r'[a-zA-Z0-9]+[.,@!%]+[a-zA-Z0-9]+')
     sports_scores = re.compile(r'[0-9]+-[0-9]+')
     dates_and_scores = re.compile(r'[0-9]+[./-][0-9]+[./-][0-9]+')
 
-    return contains_english_letters and punctuation_letters.fullmatch(word) is None and letters_punctuation.fullmatch(word) is None and letters_punctuationnodash_letters.fullmatch(word) is None and sports_scores.fullmatch(word) is None and dates_and_scores.fullmatch(word) is None
+    patterns = [
+        punctuation_letters,
+        letters_punctuation,
+        letters_punctuationnodash_letters,
+        sports_scores,
+        dates_and_scores,
+    ]
+
+    return contains_english_letters and  all(pattern.fullmatch(word) is None for pattern in patterns)
 
 def is_valid_word(word):
     """
