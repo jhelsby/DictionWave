@@ -70,6 +70,6 @@ I hope you enjoy exploring the English language with DictionWave! For implementa
 
 ## References
 
-I used [fastText](https://fasttext.cc/), the providers of `crawl-300d-2M.vec`, to create DictionWave. As per the request of the fastText project, I would therefore like to cite the following paper:
+I used [fastText](https://fasttext.cc/), the provider of `crawl-300d-2M.vec`, to create DictionWave. As per the request of the fastText project, I would therefore like to cite the following paper:
 
 T. Mikolov, E. Grave, P. Bojanowski, C. Puhrsch, A. Joulin. [Advances in Pre-Training Distributed Word Representations](https://arxiv.org/abs/1712.09405).
