@@ -8,84 +8,65 @@
     <style>
         body {
             margin: 20px;
+            background-color: rgb(31, 31, 31);
+            /* Set background to black */
+            color: rgb(198, 198, 198);
         }
 
         h1 {
             margin: 0;
-            /* Remove default margin for alignment */
             display: inline;
-            /* Keep the heading inline */
         }
 
         .header {
             display: flex;
-            /* Use flexbox to align items */
             align-items: center;
-            /* Center items vertically */
-            margin-bottom: 20px;
-            /* Space below the header */
         }
 
         .search-container {
             display: flex;
-            /* Flexbox for horizontal alignment */
             align-items: center;
-            /* Center items vertically */
             margin-left: 20px;
-            /* Space between heading and search bar */
         }
 
         .input-container {
             display: flex;
-            /* Flexbox for horizontal alignment */
             align-items: center;
-            /* Center items vertically */
-            margin-left: 40px;
-            /* Increase space between search bar and input fields */
+            margin-top: 10px;
         }
 
         .input-container label {
             margin-right: 5px;
-            /* Space between label and input */
         }
 
         .input-container input {
             width: 50px;
-            /* Set width for numeric inputs */
             margin-left: 5px;
-            /* Space between input fields */
             margin-right: 10px;
-            /* Add padding to the right of each input */
         }
 
         .results {
             display: flex;
-            /* Use flexbox for side-by-side layout */
             justify-content: space-between;
-            /* Space between columns */
-            margin-top: 20px;
         }
 
         .column {
             width: 45%;
-            /* Set width of each column */
-            padding: 10px;
-            /* Add some padding */
         }
 
         .word {
             display: inline;
-            /* Display words inline */
             margin: 0 5px;
-            /* Space between words */
             cursor: pointer;
-            /* Pointer cursor to indicate clickable */
             text-decoration: none;
-            /* No underline */
-            color: black;
-            /* Text color */
+            color: rgb(198, 198, 198);
+        }
+
+        .example {
+            margin-top: 20px;
         }
     </style>
+</head>
 
 <body>
     <div class="header">
@@ -93,15 +74,15 @@
         <div class="search-container">
             <form method="post">
                 <input type="text" name="word" placeholder="Enter a word" required>
-                <button type="submit">Find Similar Words</button>
+                <button type="submit">Explore</button>
                 <div class="input-container">
-                    <label for="num_words">Output size:</label>
+                    <label for="num_words">Output Size:</label>
                     <input type="number" id="num_words" name="num_words" placeholder="N" min="1"
-                        value="{{ request.form.num_words or 10 }}" required>
+                        value="{{ request.form.num_words or 80 }}" required>
 
-                    <label for=" rarity_boost">Rarity Boost:</label>
+                    <label for="rarity_boost">Rarity Boost:</label>
                     <input type="number" id="rarity_boost" name="rarity_boost" placeholder="R" step="0.1"
-                        value="{{ request.form.rarity_boost or 1.0 }}" required>
+                        value="{{ request.form.rarity_boost or 5.0 }}" required>
 
                     <label for="randomness">Randomness:</label>
                     <input type="number" id="randomness" name="randomness" placeholder="Rand" min="0" step="0.1"
@@ -135,6 +116,17 @@
         </div>
     </div>
 
+    {% if example_words %}
+    <div class="example">
+        <h2>Welcome! Start exploring:</h2>
+        <div>
+            {% for word in example_words %}
+            <span class="word" onclick="submitWord('{{ word }}')">{{ word }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
     <script>
         function submitWord(word) {
             const form = document.createElement('form');
@@ -146,12 +138,10 @@
             inputWord.name = 'word';
             inputWord.value = word;
 
-            // Get values from the number input fields
             const inputNumWords = document.getElementById('num_words').value;
             const inputRarityBoost = document.getElementById('rarity_boost').value;
             const inputRandomness = document.getElementById('randomness').value;
 
-            // Create hidden inputs for each value
             const inputNumWordsField = document.createElement('input');
             inputNumWordsField.type = 'hidden';
             inputNumWordsField.name = 'num_words';
@@ -167,7 +157,6 @@
             inputRandomnessField.name = 'randomness';
             inputRandomnessField.value = inputRandomness;
 
-            // Append all inputs to the form
             form.appendChild(inputWord);
             form.appendChild(inputNumWordsField);
             form.appendChild(inputRarityBoostField);
