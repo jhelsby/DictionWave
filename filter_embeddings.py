@@ -55,7 +55,9 @@ def is_valid_regex(word):
     letters_punctuation = re.compile(r'[a-zA-Z0-9]*[,.@!%-]+')
     letters_punctuationnodash_letters = re.compile(r'[a-zA-Z0-9]+[.,@!%]+[a-zA-Z0-9]+')
     sports_scores = re.compile(r'[0-9]+-[0-9]+')
-    return contains_english_letters_or_numbers and punctuation_letters.fullmatch(word) is None and letters_punctuation.fullmatch(word) is None and letters_punctuationnodash_letters.fullmatch(word) is None and sports_scores.fullmatch(word) is None
+    dates_and_scores = re.compile(r'[0-9]+[./-][0-9]+[./-][0-9]+')
+
+    return contains_english_letters_or_numbers and punctuation_letters.fullmatch(word) is None and letters_punctuation.fullmatch(word) is None and letters_punctuationnodash_letters.fullmatch(word) is None and sports_scores.fullmatch(word) is None and dates_and_scores.fullmatch(word) is None
 
 def is_valid_word(word):
     """
@@ -81,6 +83,6 @@ with open(input_file, 'r', encoding='utf-8') as f_in, open(output_file, 'w', enc
             f_out.write(line)  
             num_of_output_lines += 1
 
-print(f"Output file: {output_file}.")
-print(f"Number of words in output: {num_of_output_lines}.")
-print(f"Number of words filtered out: {total_lines - num_of_output_lines}.")
+print(f"Output file: {output_file}")
+print(f"Number of words in output: {num_of_output_lines}")
+print(f"Number of words filtered out: {total_lines - num_of_output_lines}")
