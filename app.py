@@ -2,23 +2,39 @@ from flask import Flask, render_template, request
 import os, pickle, random
 import dotenv
 import gdown
+from threading import Thread
 from similarity_core import most_similar
 
 rarity_boost = 5.0
 randomness = 1.0
+lite_embeddings_filepath = 'embeddings_lite.pkl'
 
 app = Flask(__name__)
 
-local_embeddings_filepath = 'embeddings_lite.pkl'
 dotenv.load_dotenv()
 
-if not os.path.exists(local_embeddings_filepath):
-    print('Downloading embeddings...')
-    gdown.download(f'https://drive.google.com/uc?id={os.getenv("GDRIVE_EMBEDDINGS_FILE_ID")}', 'embeddings.pkl', quiet=False)
-    print("Embeddings downloaded.")
-
-with open(local_embeddings_filepath, 'rb') as file:
+def load_embeddings_from_file(embeddings_filepath):
+    with open(embeddings_filepath, 'rb') as file:
         word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word  = pickle.load(file)
+
+        return word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word
+
+def load_full_embeddings():
+    full_embeddings_filepath = 'embeddings.pkl'
+    if not os.path.exists(full_embeddings_filepath):
+        gdrive_file_id = os.getenv('GDRIVE_EMBEDDINGS_FILE_ID')
+        gdown.download(f'https://drive.google.com/uc?id={gdrive_file_id}', full_embeddings_filepath, quiet=False)
+        print("Full embeddings file downloaded.")
+        global word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word
+        word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings_from_file(full_embeddings_filepath)
+
+def load_full_embeddings_in_background():
+    thread = Thread(target=load_full_embeddings)
+    thread.start()
+
+word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings_from_file(lite_embeddings_filepath)
+
+load_full_embeddings_in_background()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
