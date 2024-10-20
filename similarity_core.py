@@ -10,15 +10,12 @@ total_number_of_words = 1240641
 # Function to load the top number_of_words word vectors from the .vec file
 def load_embeddings(number_of_words):
 
-    print("Loading embeddings from ", embeddings_file, ".")
+    print(f"Loading embeddings from {embeddings_file}.")
 
     if number_of_words is None:
         number_of_words = total_number_of_words
 
     with open(embeddings_file, 'r', encoding='utf-8') as f:
-        # Skip the first line with metadata
-        next(f)
-
         lowercase_word_to_index = dict()
         lowercase_word_to_word = dict()
 
@@ -130,26 +127,26 @@ if __name__ == "__main__":
     print(f"You have selected {number_of_words} words, a rarity boost of {rarity_boost}, and a randomness factor of {randomness}. Have fun!\n")
 
     while True:
-        word = input("Enter a word: ").lower()
+        input_word = input("Enter a word: ").lower()
         print()
-        if word == "":
+        if input_word == "":
             print("Please enter a word.\n")
             continue
 
-        most_similar_words, most_similar_boosted = most_similar(word, word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word, rarity_boost=rarity_boost, randomness=randomness)
+        most_similar_words, most_similar_boosted = most_similar(input_word, word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word, rarity_boost=rarity_boost, randomness=randomness)
 
         if not most_similar_words:
             continue
 
         print("Most similar words:\n")
         for word in most_similar_words:
-            print(lowercase_word_to_word[word], end=" ")
+            print(word, end=" ")
 
         print("\n")
         if rarity_boost != 0.0:
             print("Rarity boosted words:\n")
 
             for word in most_similar_boosted:
-                print(lowercase_word_to_word[word], end=" ")
+                print(word, end=" ")
 
             print("\n")
