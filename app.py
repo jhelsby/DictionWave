@@ -34,7 +34,8 @@ def load_full_embeddings_in_background():
 
 word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings_from_file(lite_embeddings_filepath)
 
-load_full_embeddings_in_background()
+# If the server has over 2GB RAM, consider using the full embeddings set.
+# load_full_embeddings_in_background()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
