@@ -17,7 +17,7 @@ if not os.path.exists(local_embeddings_filepath):
     gdown.download(f'https://drive.google.com/uc?id={os.getenv("GDRIVE_EMBEDDINGS_FILE_ID")}', 'embeddings.pkl', quiet=False)
     print("Embeddings downloaded.")
 
-with open('embeddings.pkl', 'rb') as file:
+with open(local_embeddings_filepath, 'rb') as file:
         word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word  = pickle.load(file)
 
 @app.route('/', methods=['GET', 'POST'])
