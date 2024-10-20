@@ -50,11 +50,12 @@ def is_valid_regex(word):
     Filter out words that have certain punctuation marks in the middle,
     as these may be chunks of sentences (e.g. "easily.Thanks").
     """
+    contains_english_letters_or_numbers = any(char.isascii() and (char.isalpha() or char.isdigit()) for char in word)
     punctuation_letters = re.compile(r'[,.@!%-]+[a-zA-Z0-9]*')
     letters_punctuation = re.compile(r'[a-zA-Z0-9]*[,.@!%-]+')
     letters_punctuationnodash_letters = re.compile(r'[a-zA-Z0-9]+[.,@!%]+[a-zA-Z0-9]+')
-    contains_english_letters_or_numbers = any(char.isascii() and (char.isalpha() or char.isdigit()) for char in word)
-    return punctuation_letters.fullmatch(word) is None and letters_punctuation.fullmatch(word) is None and letters_punctuationnodash_letters.fullmatch(word) is None and contains_english_letters_or_numbers
+    sports_scores = re.compile(r'[0-9]+-[0-9]+')
+    return contains_english_letters_or_numbers and punctuation_letters.fullmatch(word) is None and letters_punctuation.fullmatch(word) is None and letters_punctuationnodash_letters.fullmatch(word) is None and sports_scores.fullmatch(word) is None
 
 def is_valid_word(word):
     """

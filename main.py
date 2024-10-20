@@ -5,7 +5,7 @@ import random
 embeddings_file = "filtered_crawl-300d-2M.vec"
 
 # Number of lines in my filtered_crawl-300d-2M.vec file - precomputed.
-total_number_of_words = 1327177
+total_number_of_words = 1311741
 
 word_vectors = dict()
 word_ranks = dict()
