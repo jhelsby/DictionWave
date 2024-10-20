@@ -3,3 +3,4 @@ tqdm
 Flask
 gdown
 python-dotenv
+gunicorn

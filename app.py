@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-import os, pickle, random, dotenv
+import os, pickle, random
+import dotenv
 import gdown
 from similarity_core import most_similar
 
@@ -44,4 +45,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
