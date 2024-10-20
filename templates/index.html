@@ -5,77 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DictionWave</title>
-    <style>
-        body {
-            margin: 20px;
-            background-color: rgb(31, 31, 31);
-            color: rgb(198, 198, 198);
-        }
-
-        h1 {
-            margin: 0;
-            display: inline;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-        }
-
-        a {
-            color: rgb(198, 198, 198);
-            text-decoration: none;
-        }
-
-        .search-container {
-            display: flex;
-            align-items: center;
-            margin-left: 20px;
-        }
-
-        .input-container {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .input-container label {
-            margin-right: 5px;
-        }
-
-        .input-container input {
-            width: 50px;
-            margin-left: 5px;
-            margin-right: 10px;
-        }
-
-        .results {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .column {
-            width: 45%;
-        }
-
-        .word {
-            display: inline;
-            margin: 0 5px;
-            cursor: pointer;
-            text-decoration: none;
-            color: rgb(198, 198, 198);
-        }
-
-        .welcome {
-            margin-top: 40px;
-            margin-left: 15%;
-            margin-right: 15%;
-        }
-
-        .example {
-            margin: 40px 10%;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>

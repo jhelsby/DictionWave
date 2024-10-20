@@ -1,0 +1,133 @@
+body {
+    margin: 20px;
+    background-color: rgb(31, 31, 31);
+    color: rgb(198, 198, 198);
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+h1 {
+    margin-right: 10px;
+    font-size: 24px;
+    color: inherit;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+a {
+    color: inherit;
+    /* Keep the link looking like text */
+    text-decoration: none;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    /* Align search bar next to header */
+}
+
+.search-container input[type="text"] {
+    width: 90%;
+    /* Narrow down the textbox width */
+    max-width: 150px;
+    /* Set a fixed max-width */
+    margin-right: 10px;
+    /* Add a small space between input and numboxes */
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: -10px;
+}
+
+.input-container label {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.input-container input[type="number"] {
+    width: 50px;
+    min-width: 40px;
+    /* Set width to fit around 4 digits */
+    margin-left: 5px;
+    margin-right: 10px;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        /* Stack vertically on smaller screens */
+        align-items: flex-start;
+    }
+
+    .search-container {
+        width: 100%;
+        /* Full width on smaller screens */
+    }
+
+    .search-container input[type="text"] {
+        width: 100%;
+        /* Full width on smaller screens */
+    }
+
+    .input-container {
+        justify-content: flex-start;
+        width: 100%;
+        /* Make inputs take full width */
+    }
+
+    .input-container input[type="number"] {
+        width: 100%;
+        /* Adjust numboxes for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .input-container input[type="number"] {
+        width: 100%;
+        /* Full width for inputs on mobile */
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+
+.results {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: 45%;
+}
+
+.word {
+    display: inline;
+    margin: 0 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(198, 198, 198);
+}
+
+.welcome {
+    margin-top: 40px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.example {
+    margin: 40px 10%;
+}
