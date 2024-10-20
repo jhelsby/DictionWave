@@ -58,7 +58,7 @@ def apply_rarity_boost(similarities, rarity_boost):
     return similarities * rarity_weights
 
 # Function to find the most similar words both with and without rarity boost
-def most_similar(word, word_list, word_vectors, lowercase_word_to_index, rarity_boost=5.0, randomness=0.0):
+def most_similar(word, word_list, word_vectors, lowercase_word_to_index, rarity_boost=5.0, randomness=0.0, num_words_to_output=200):
 
     word_index = lowercase_word_to_index.get(word)
 
