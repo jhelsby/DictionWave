@@ -2,3 +2,5 @@ blacklist.txt
 crawl-300d-2M.vec
 filtered_crawl-300d-2M.vec
 venv/
+__pycache__
+embeddings.pkl
