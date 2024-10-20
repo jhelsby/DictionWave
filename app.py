@@ -1,15 +1,23 @@
 from flask import Flask, render_template, request
-import pickle
+import os, pickle, random, dotenv
+import gdown
 from similarity_core import most_similar
-import random
 
 rarity_boost = 5.0
 randomness = 1.0
 
 app = Flask(__name__)
 
+local_embeddings_filepath = 'embeddings.pkl'
+dotenv.load_dotenv()
+
+if os.path.exists(local_embeddings_filepath):
+    print('downloading')
+    gdown.download(f'https://drive.google.com/uc?id={os.getenv("GDRIVE_EMBEDDINGS_FILE_ID")}', 'embeddings.pkl', quiet=False)
+    print("done")
+
 with open('embeddings.pkl', 'rb') as file:
-    word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word  = pickle.load(file)
+        word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word  = pickle.load(file)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

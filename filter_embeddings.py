@@ -1,5 +1,6 @@
 from tqdm import tqdm
 import re
+import save_embeddings
 
 input_file = 'crawl-300d-2M.vec'
 blacklist_file = 'blacklist.txt'
@@ -90,6 +91,8 @@ with open(input_file, 'r', encoding='utf-8') as f_in, open(output_file, 'w', enc
     Create a new word vector file, filtering out all unwanted words.
     """
 
+    print("Filtering embeddings from ", input_file, ".")
+
     # Use tqdm to create a progress bar
     for line in tqdm(f_in, total=total_lines, desc="Processing lines", unit="line"):
         # Split the line into the word and its vector components
@@ -103,3 +106,6 @@ with open(input_file, 'r', encoding='utf-8') as f_in, open(output_file, 'w', enc
 print(f"Output file: {output_file}")
 print(f"Number of words in output: {num_of_output_lines}")
 print(f"Number of words filtered out: {total_lines - num_of_output_lines}")
+
+print("Saving to embeddings.pkl...")
+save_embeddings.main()

@@ -1,3 +1,5 @@
 numpy
 tqdm
 Flask
+gdown
+python-dotenv

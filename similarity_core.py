@@ -10,6 +10,8 @@ total_number_of_words = 1240641
 # Function to load the top number_of_words word vectors from the .vec file
 def load_embeddings(number_of_words):
 
+    print("Loading embeddings from ", embeddings_file, ".")
+
     if number_of_words is None:
         number_of_words = total_number_of_words
 
