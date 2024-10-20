@@ -5,7 +5,7 @@ import random
 embeddings_file = "filtered_crawl-300d-2M.vec"
 
 # Number of lines in my filtered_crawl-300d-2M.vec file - precomputed.
-total_number_of_words = 1247074
+total_number_of_words = 1240641
 
 # Function to load the top number_of_words word vectors from the .vec file
 def load_embeddings(number_of_words):

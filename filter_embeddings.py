@@ -59,8 +59,9 @@ def is_valid_regex(word):
     letters_punctuationnodash_letters = re.compile(r'[a-zA-Z0-9]+[.,@!%]+[a-zA-Z0-9]+')
     sports_scores = re.compile(r'[0-9]+-[0-9]+')
     dates_and_scores = re.compile(r'[0-9]+[./-][0-9]+[./-][0-9]+')
-    www_domains = re.compile(r'www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}')
-    common_tlds = re.compile(r'[a-zA-Z0-9-]+\.(?:com|net|org|gov|edu|io|co|info|biz|me|us)')
+    www_domains = re.compile(r'www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}\.*')
+    common_tlds = re.compile(r'[a-zA-Z0-9-]+\.(?:com|net|org|gov|edu|io|co|info|biz|me|us|co.uk)\.*')
+    three_or_more_repeated_chars = re.compile(r'\b\w*(?:(.)\1{2,})\w*\b')
 
     patterns = [
         punctuation_letters,
@@ -69,10 +70,11 @@ def is_valid_regex(word):
         sports_scores,
         dates_and_scores,
         www_domains,
-        common_tlds
+        common_tlds,
+        three_or_more_repeated_chars
     ]
 
-    return contains_english_letters and  all(pattern.fullmatch(word) is None for pattern in patterns)
+    return contains_english_letters and all(pattern.fullmatch(word) is None for pattern in patterns)
 
 def is_valid_word(word):
     """
