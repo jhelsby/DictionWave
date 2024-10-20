@@ -2,6 +2,8 @@ from similarity_core import load_embeddings
 import pickle
 
 def main():
+    # None loads all words.
+    # embeddings_lite has 74000 words - just under 100MB.
     num_words_to_load = None
 
     word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings(num_words_to_load)

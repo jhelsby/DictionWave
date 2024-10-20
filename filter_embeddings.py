@@ -91,7 +91,7 @@ with open(input_file, 'r', encoding='utf-8') as f_in, open(output_file, 'w', enc
     Create a new word vector file, filtering out all unwanted words.
     """
 
-    print("Filtering embeddings from ", input_file, ".")
+    print(f"Filtering embeddings from {input_file}.")
 
     # Use tqdm to create a progress bar
     for line in tqdm(f_in, total=total_lines, desc="Processing lines", unit="line"):
