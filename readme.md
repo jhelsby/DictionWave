@@ -49,7 +49,7 @@ Please see below for more detailed instructions on how to set up this project. I
 
 1. Open your terminal and clone this repostory:
     ```
-    git clone [url] 
+    git clone https://github.com/jhelsby/DictionWave.git 
     cd DictionWave
     ```
 
