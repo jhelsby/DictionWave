@@ -15,7 +15,7 @@
             <form method="post">
                 <input type="text" name="word" placeholder="Enter a word" {% if last_word %} value="{{ last_word }}" {%
                     endif %} required>
-                <button type="submit">Explore</button>
+                <button type="submit">Search</button>
                 <div class="input-container">
                     <label for="num_words">Output Size:</label>
                     <input type="number" id="num_words" name="num_words" placeholder="Num Words" min="1"
@@ -34,15 +34,15 @@
     </div>
 
     <div class="results">
+        {% if similar_words %}
+
         <div class="column">
-            {% if similar_words %}
             <h2>Similar Words:</h2>
             <div>
                 {% for word in similar_words %}
                 <span class="word" onclick="submitWord('{{ word }}')">{{ word }}</span>
                 {% endfor %}
             </div>
-            {% endif %}
         </div>
 
         <div class="column">
@@ -55,6 +55,8 @@
             </div>
             {% endif %}
         </div>
+
+        {% endif %}
     </div>
 
     {% if example_words %}
@@ -64,7 +66,7 @@
             <p>
                 DictionWave lets you explore the English language using the power of word embeddings. Here are a few
                 ideas
-                to get you started &ndash; just click a word to begin your journey. Each word in the lists that
+                to get you started &ndash; just click a word to begin your journey. Each word in the lists that will
                 follow
                 is another link to further exploration.
             </p>
@@ -73,15 +75,13 @@
                 <span class="word" onclick="submitWord('{{ word }}')">{{ word }}</span>
                 {% endfor %}
             </div>
-            <p>The number boxes above allow for some additional fine-tuning. Output Size just determines how many words
-                are
-                returned from each query. A larger Rarity Boost will favour less frequently used words, and a larger
-                Randomness factor introduces a chance that less similar words will be shown. </p>
             <p>
-                This is an open-source project licensed under the MIT License. Its GitHub repository can be found
-                <u><a href="https://github.com/jhelsby/DictionWave">here</a></u>, along with further details on how it
-                works. All word data is derived from <u><a href="https://commoncrawl.org/">Common Crawl</a></u> web
-                data, and similiarities are calculated using <u><a href="https://fasttext.cc/">fastText</a></u>. Many
+                This is an
+                open-source
+                project
+                licensed under the MIT License. Its GitHub repository can be found
+                <u><a href="https://github.com/jhelsby/DictionWave">here</a></u>, and more information can be found
+                <u><a href="{{ url_for('about') }}">here</a></u>. Many
                 thanks for visiting!
             </p>
         </div>

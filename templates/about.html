@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DictionWave &ndash; About</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <h1><a href="{{ url_for('index') }}">DictionWave</a></h1>
+        <div class="search-container">
+            <form method="post">
+                <input type="text" name="word" placeholder="Enter a word" {% if last_word %} value="{{ last_word }}" {%
+                    endif %} required>
+                <button type="submit">Search</button>
+                <div class="input-container">
+                    <label for="num_words">Output Size:</label>
+                    <input type="number" id="num_words" name="num_words" placeholder="Num Words" min="1"
+                        value="{{ request.form.num_words or 80 }}" required>
+
+                    <label for="rarity_boost">Rarity Boost:</label>
+                    <input type="number" id="rarity_boost" name="rarity_boost" placeholder="Rarity" min="0" step="1.0"
+                        value="{{ request.form.rarity_boost or 5.0 }}" required>
+
+                    <label for="randomness">Randomness:</label>
+                    <input type="number" id="randomness" name="randomness" placeholder="Rand" min="0" step="1.0"
+                        value="{{ request.form.randomness or 0.0 }}" required>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <div class="welcome">
+            <h2>About</h2>
+            <p>DictionWave is an NLP-based word-discovery tool built with Python, NumPy, Flask, and <u><a
+                        href="https://fasttext.cc/">fastText</a></u> word
+                embeddings.</p>
+            <p>The number boxes above allow you to fine-tune the output a little. <i>Output Size</i> determines how many
+                words will be returned from each query. <i>Rarity Boost</i> allows you to discover less frequently used
+                words:
+                the higher the
+                value, the more the rarity of a word will be prioritised. A nonzero <i>Randomness</i> value shuffles the
+                words, and
+                introduces a chance that
+                less similar words will be shown. A larger Randomness value increases the likelihood and the extent to
+                which output words will be unrelated to the input word.</p>
+            <p>All word data is derived from <u><a href="https://commoncrawl.org/">Common Crawl</a></u> web
+                data (600B tokens), and the words are organised using <u><a
+                        href="https://en.wikipedia.org/wiki/Cosine_similarity">cosine similarities</a></u> of word
+                vectors created by the fastText library. Specifically, fastText&apos;s crawl-300d-2M.vec resource was
+                used, which contains
+                two million words. This data was cleaned to remove duplicates, and information deemed to be irrelevant
+                or excessively offensive. For more technical details,
+                please see
+                <u><a href="https://github.com/jhelsby/DictionWave?tab=readme-ov-file#implementation-details">Implementation
+                        Details</a></u> on the DictionWave GitHub repository.
+            </p>
+            <p>Thank you for reading, and I hope you enjoy using DictionWave! Click <u><a
+                        href="{{ url_for('index') }}">here</a></u> to return to
+                the homepage.</p>
+        </div>
+    </div>
+</body>
+
+</html>

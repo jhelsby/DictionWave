@@ -2,8 +2,8 @@
 Flask web application logic for DictionWave.
 """
 
-from flask import Flask, render_template, request
-import os, pickle, random
+from flask import Flask, render_template, request, redirect, url_for
+import os, pickle, random, requests
 import dotenv
 import gdown
 from threading import Thread
@@ -75,6 +75,14 @@ def index():
 
     return render_template('index.html', similar_words=similar_words, similar_words_boosted=similar_words_boosted, last_word=word,example_words=example_words)
 
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    if request.method == 'POST':
+        response = requests.post(url_for('index', _external=True), data=request.form)
+
+        return response.content  
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+
