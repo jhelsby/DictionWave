@@ -1,3 +1,7 @@
+"""
+Flask web application logic for DictionWave.
+"""
+
 from flask import Flask, render_template, request
 import os, pickle, random
 import dotenv
@@ -8,6 +12,12 @@ from similarity_core import most_similar
 rarity_boost = 5.0
 randomness = 1.0
 lite_embeddings_filepath = 'embeddings_lite.pkl'
+full_embeddings_filepath = 'embeddings.pkl'
+
+# Set whether to use the locally hosted, 74,000 word lite_embeddings file,
+# or the full 1.2 million word embeddings file (which may need to be downloaded).
+use_full_embeddings = False
+
 
 app = Flask(__name__)
 
@@ -20,13 +30,15 @@ def load_embeddings_from_file(embeddings_filepath):
         return word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word
 
 def load_full_embeddings():
-    full_embeddings_filepath = 'embeddings.pkl'
+    # If full_embeddings file doesn't exist, download it from Google Drive.
     if not os.path.exists(full_embeddings_filepath):
         gdrive_file_id = os.getenv('GDRIVE_EMBEDDINGS_FILE_ID')
         gdown.download(f'https://drive.google.com/uc?id={gdrive_file_id}', full_embeddings_filepath, quiet=False)
         print("Full embeddings file downloaded.")
-        global word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word
-        word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings_from_file(full_embeddings_filepath)
+
+    # Load full embeddings.
+    global word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word
+    word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings_from_file(full_embeddings_filepath)
 
 def load_full_embeddings_in_background():
     thread = Thread(target=load_full_embeddings)
@@ -35,7 +47,8 @@ def load_full_embeddings_in_background():
 word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings_from_file(lite_embeddings_filepath)
 
 # If the server has over 2GB RAM, consider using the full embeddings set.
-# load_full_embeddings_in_background()
+if use_full_embeddings:
+    load_full_embeddings_in_background()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
