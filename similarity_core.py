@@ -12,7 +12,6 @@ from tqdm import tqdm
 import random
 
 embeddings_file = "filtered_crawl-300d-2M.vec"
-random.seed(1)
 
 # Number of lines in my filtered_crawl-300d-2M.vec file - precomputed.
 total_number_of_words = 1239471
