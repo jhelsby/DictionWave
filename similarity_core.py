@@ -1,8 +1,18 @@
+"""
+Core engine for DictionWave. Loads word embeddings from pkl file
+output by save_embeddings.py, and calculates similarities between
+a given input word and all other words. Optionally allows the following
+parameters to be set:
+- 'rarity boost', which biases the output towards less frequently used words.
+- 'randomness', which adds a probability that less similar words might appear.
+"""
+
 import numpy as np
 from tqdm import tqdm
 import random
 
 embeddings_file = "filtered_crawl-300d-2M.vec"
+random.seed(1)
 
 # Number of lines in my filtered_crawl-300d-2M.vec file - precomputed.
 total_number_of_words = 1239471
@@ -81,9 +91,10 @@ def most_similar(word, word_list, word_vectors, lowercase_word_to_index, lowerca
     most_similar_idx = np.argsort(similarities)[::-1][:shuffle_length]
     most_similar_boosted_idx = np.argsort(boosted_similarities)[::-1][:shuffle_length]
     
-    # SHuffle these words
-    random.shuffle(most_similar_idx)
-    random.shuffle(most_similar_boosted_idx)
+    # Shuffle these words if randomness has been set.
+    if randomness > 0:
+        random.shuffle(most_similar_idx)
+        random.shuffle(most_similar_boosted_idx)
     
     # Select the top 'num_words_to_output' from the shuffled indices
     most_similar_words = [lowercase_word_to_word[word_list[i]] for i in most_similar_idx[:num_words_to_output]]
@@ -115,8 +126,9 @@ if __name__ == "__main__":
     num_words_to_output = interpret_user_input(input(f"Number of words to see: "), int, 200)
 
     # Prompt user
-    print((f"Enter a rarity boost factor. 0 for no boost, higher values favor rare words. Negative values will show common words more often. \nDefault value is 5.0. If you enter 0, no rarity-boosted words will be shown."))
+    print((f"Enter a rarity boost factor. 0 for no boost, higher values favor rare words. \nDefault value is 5.0. If you enter 0, no rarity-boosted words will be shown."))
     rarity_boost = interpret_user_input(input("Rarity boost: "), float, 5.0)
+    rarity_boost = 0. if rarity_boost < 0 else rarity_boost
 
     # Prompt user
     print("Enter a randomness factor. 0 for no randomness, higher values introduce randomness. Default value is 0.0.")
