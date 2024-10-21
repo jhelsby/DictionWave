@@ -7,7 +7,7 @@ body {
 }
 
 h1 {
-    margin-right: 10px;
+    margin-right: 7%;
     font-size: 24px;
     color: inherit;
 }
@@ -112,6 +112,7 @@ a {
 
 .column {
     width: 48%;
+    margin-top: 3%;
 }
 
 .word {
