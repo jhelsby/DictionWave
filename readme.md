@@ -37,7 +37,7 @@ Polonius Coriolanus Rosaline Hazlitt Albee
 Metamorphoses Pygmalion Moby-Dick Malory Banquo
 ```
 
-I hope you enjoy exploring the English language with DictionWave! For implementation details, please see [`similarity_core.py`](./similarity_core.py) and [Implementation Details](#implementation-details) below. If you want to set it up for yourself, please see the instructions below. I plan on making the web application shown in the video above publicly accessible as soon as I can.
+I hope you enjoy exploring the English language with DictionWave! For implementation details, please see [`similarity_core.py`](./similarity_core.py) and [Implementation Details](#implementation-details) below. If you want to set it up for yourself, please see the [Development Setup](#development-setup) directly below. I plan on making the web application shown in the video above publicly accessible as soon as I can.
 
 ## Development Setup
 
