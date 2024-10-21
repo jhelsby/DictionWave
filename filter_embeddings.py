@@ -1,3 +1,9 @@
+"""
+Filter an input word vector file to remove duplicate,
+irrelevant, and blacklisted words. Save the output to a
+new word vector file, and the embeddings to a pkl file.
+"""
+
 from tqdm import tqdm
 import re
 import save_embeddings

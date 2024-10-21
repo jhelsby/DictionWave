@@ -1,15 +1,20 @@
+""""""
+
 from similarity_core import load_embeddings
 import pickle
 
-is_embeddings_lite = False
+# Choose whether to save all word embeddings, or 
+# a <100MB subset of 74,000 words.
+save_embeddings_lite_file = False
+embeddings_lite_size = 74000
+
+embeddings_lite_filename = 'embeddings_lite.pkl'
+embeddings_full_filename = 'embeddings.pkl'
 
 def main():
     # None loads all words.
-    # embeddings_lite has 74000 words - just under 100MB.
-
-    num_words_to_load = 74000 if is_embeddings_lite else None
-
-    output_filename = 'embeddings_lite.pkl' if is_embeddings_lite else 'embeddings.pkl'
+    num_words_to_load = embeddings_lite_size if save_embeddings_lite_file else None
+    output_filename = embeddings_lite_filename if save_embeddings_lite_file else embeddings_full_filename
 
     word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word = load_embeddings(num_words_to_load)
 
