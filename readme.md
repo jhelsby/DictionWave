@@ -37,7 +37,7 @@ Polonius Coriolanus Rosaline Hazlitt Albee
 Metamorphoses Pygmalion Moby-Dick Malory Banquo
 ```
 
-I hope you enjoy exploring the English language with DictionWave! For implementation details, please see [`similarity_core.py`](./similarity_core.py). If you want to set it up for yourself, please see the instructions below. I plan on making the web application shown in the video above publicly accessible as soon as I can.
+I hope you enjoy exploring the English language with DictionWave! For implementation details, please see [`similarity_core.py`](./similarity_core.py) and [Implementation Details](#implementation-details) below. If you want to set it up for yourself, please see the instructions below. I plan on making the web application shown in the video above publicly accessible as soon as I can.
 
 ## Development Setup
 
@@ -69,6 +69,14 @@ I hope you enjoy exploring the English language with DictionWave! For implementa
 5. To run the program in your terminal, run `python similarity_core.py` and follow the instructions it provides. To run the program as a Flask web application, run `python app.py`.
 
     * To make running the web app easier on servers with limited memory, I have included a `embeddings_lite.pkl` file in this repository which is just under GitHub's 100MB limit and contains 74,000 word embeddings.
+
+## Implementation Details
+
+DictionWave uses fastText word embeddings trained on Common Crawl data to calculate cosine similarities between words. It additionally applies a ranking algorithm based on word frequency, allowing the user to view rarer words as desired, alongside optional randomness. For further details, please see the implementation, in [similarity_core.py](./similarity_core.py).
+
+The fastText database used - crawl-300d-2M.vec - contains two million unique words taken from Common Crawl data; 630 billion words obtained from crawling the web. Many of these are data irrelevant or harmful to this use case, such as numbers, misspellings, duplicates, and obscene or derogatory language. I implemented a number of automated processes alongside manual cleaning to remove as many of these words as possible – 759,359 at the last count (38%). The code handling this can be found in [filter_embeddings.py](./filter_embeddings.py). I hope to reduce this dataset further using NLP techniques, as a cleaner dataset would improve speed, memory consumption, and output quality.
+
+Finally, the web application logic, implemented with Flask, HTML, and CSS, can be found in [app.py](./app.py) and [index.html](./templates/index.html). I tried to keep the frontend design deliberately minimal, functionality-focused, and (though this is of course completely subjective!) fun to use.
 
 ## References
 
