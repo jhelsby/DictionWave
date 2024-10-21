@@ -80,15 +80,16 @@ def most_similar(word, word_list, word_vectors, lowercase_word_to_index, lowerca
     word_vector = word_vectors[word_index]
 
     similarities = cosine_similarity(word_vector, word_vectors)
-   
     boosted_similarities = apply_rarity_boost(similarities, rarity_boost)
     
     # The larger the randomness factor, the more words we consider including in the output.
     shuffle_length = num_words_to_output + int(randomness * num_words_to_output)
     
-    # Get the indices of the top 'shuffle_length' most similar words
-    most_similar_idx = np.argsort(similarities)[::-1][:shuffle_length]
-    most_similar_boosted_idx = np.argsort(boosted_similarities)[::-1][:shuffle_length]
+    # Get the indices of the top 'shuffle_length' most similar words.
+    # Ignore index 0 since this will always be the input word - every
+    # word is most similar to itself.
+    most_similar_idx = np.argsort(similarities)[::-1][1:shuffle_length+1]
+    most_similar_boosted_idx = np.argsort(boosted_similarities)[::-1][1:shuffle_length+1]
     
     # Shuffle these words if randomness has been set.
     if randomness > 0:
