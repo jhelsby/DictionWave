@@ -18,11 +18,11 @@
                 <button type="submit">Explore</button>
                 <div class="input-container">
                     <label for="num_words">Output Size:</label>
-                    <input type="number" id="num_words" name="num_words" placeholder="N" min="1"
+                    <input type="number" id="num_words" name="num_words" placeholder="Num Words" min="1"
                         value="{{ request.form.num_words or 80 }}" required>
 
                     <label for="rarity_boost">Rarity Boost:</label>
-                    <input type="number" id="rarity_boost" name="rarity_boost" placeholder="R" step="1.0"
+                    <input type="number" id="rarity_boost" name="rarity_boost" placeholder="Rarity" min="0" step="1.0"
                         value="{{ request.form.rarity_boost or 5.0 }}" required>
 
                     <label for="randomness">Randomness:</label>
@@ -64,21 +64,25 @@
             <p>
                 DictionWave lets you explore the English language using the power of word embeddings. Here are a few
                 ideas
-                to get you started &ndash; just click a word to begin your journey. Each new word in the lists that
+                to get you started &ndash; just click a word to begin your journey. Each word in the lists that
                 follow
-                is a link to more. Explore to your heart&apos;s content!
+                is another link to further exploration.
             </p>
             <div class="example">
                 {% for word in example_words %}
                 <span class="word" onclick="submitWord('{{ word }}')">{{ word }}</span>
                 {% endfor %}
             </div>
-            <p>The number boxes above allow for some additional fine-tuning. Output Size determines how many words are
-                returned from each query. Rarity Boost </p>
+            <p>The number boxes above allow for some additional fine-tuning. Output Size just determines how many words
+                are
+                returned from each query. A larger Rarity Boost will favour less frequently used words, and a larger
+                Randomness factor introduces a chance that less similar words will be shown. </p>
             <p>
                 This is an open-source project licensed under the MIT License. Its GitHub repository can be found
                 <u><a href="https://github.com/jhelsby/DictionWave">here</a></u>, along with further details on how it
-                works. Many thanks for visiting!
+                works. All word data is derived from <u><a href="https://commoncrawl.org/">Common Crawl</a></u> web
+                data, and similiarities are calculated using <u><a href="https://fasttext.cc/">fastText</a></u>. Many
+                thanks for visiting!
             </p>
         </div>
     </div>
