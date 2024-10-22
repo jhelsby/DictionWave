@@ -101,9 +101,8 @@ with open(input_file, 'r', encoding='utf-8') as f_in, open(output_file, 'w', enc
 
     # Use tqdm to create a progress bar
     for line in tqdm(f_in, total=total_lines, desc="Processing lines", unit="line"):
-        # Split the line into the word and its vector components
-        parts = line.split()
-        word = parts[0] 
+        # Word is first space separated element in line.
+        word = line.split()[0] 
 
         if is_valid_word(word):
             f_out.write(line)  
