@@ -76,6 +76,8 @@ DictionWave uses fastText word embeddings trained on Common Crawl data to calcul
 
 The fastText database used - crawl-300d-2M.vec - contains two million unique words taken from Common Crawl data; 630 billion words obtained from crawling the web. Many of these are data irrelevant or harmful to this use case, such as numbers, misspellings, duplicates, and obscene or derogatory language. I implemented a number of automated processes alongside manual cleaning to remove as many of these words as possible – 759,359 at the last count (38%). The code handling this can be found in [filter_embeddings.py](./filter_embeddings.py). I hope to reduce this dataset further using NLP techniques, as a cleaner dataset would improve speed, memory consumption, and output quality.
 
+I am in the process of writing a script called [filter_misspellings.py](/estimate_misspellings/filter_misspellings.py), which tries to estimate which of the rarer words are actually misspellings or alternative spellings of more common words. The algorithm builds a [BK-tree](https://en.wikipedia.org/wiki/BK-tree) of the most frequent words, and compares these with the rarest words using the [Damerau-Levenshtein distance](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance).
+
 Finally, the web application logic, implemented with Flask, HTML, and CSS, can be found in [app.py](./app.py) and [index.html](./templates/index.html). I tried to keep the frontend design deliberately minimal, functionality-focused, and (though this is of course completely subjective!) fun to use.
 
 ## References
