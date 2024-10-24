@@ -71,7 +71,8 @@ def index():
             similar_words = ["Word not found."]
     
     else: 
-        example_words = random.sample(list(word_list), min(len(word_list), 15))
+        example_lowercase_words = random.sample(list(word_list), min(len(word_list), 15))
+        example_words = [lowercase_word_to_word[lowercase_word] for lowercase_word in example_lowercase_words]
 
     return render_template('index.html', similar_words=similar_words, similar_words_boosted=similar_words_boosted, last_word=word,example_words=example_words)
 
