@@ -14,7 +14,7 @@ import random
 embeddings_file = "filtered_crawl-300d-2M.vec"
 
 # Number of lines in my filtered_crawl-300d-2M.vec file - precomputed.
-total_number_of_words = 1239471
+total_number_of_words = 1201472
 
 # Function to load the top number_of_words word vectors from the .vec file
 def load_embeddings(number_of_words):
@@ -49,8 +49,12 @@ def load_embeddings(number_of_words):
 
     return word_list, word_vectors, lowercase_word_to_index, lowercase_word_to_word
 
+# Function to compute cosine similarity between two vectors
+def cosine_similarity(v1, v2):
+    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+
 # Function to compute cosine similarity between a vector and all word vectors
-def cosine_similarity(query_vector, vectors):
+def cosine_similarities(query_vector, vectors):
     dot_products = np.dot(vectors, query_vector)
     norms = np.linalg.norm(vectors, axis=1) * np.linalg.norm(query_vector)
     return dot_products / norms
@@ -79,7 +83,7 @@ def most_similar(word, word_list, word_vectors, lowercase_word_to_index, lowerca
     
     word_vector = word_vectors[word_index]
 
-    similarities = cosine_similarity(word_vector, word_vectors)
+    similarities = cosine_similarities(word_vector, word_vectors)
     boosted_similarities = apply_rarity_boost(similarities, rarity_boost)
     
     # The larger the randomness factor, the more words we consider including in the output.

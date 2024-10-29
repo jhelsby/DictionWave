@@ -7,9 +7,11 @@ new word vector file, and the embeddings to a pkl file.
 from tqdm import tqdm
 import re
 import save_embeddings
+import unicodedata
 
 input_file = 'crawl-300d-2M.vec'
 blacklist_file = 'blacklist.txt'
+misspellings_file = 'misspellings.txt'
 output_file = 'filtered_crawl-300d-2M.vec'
 
 # Number of lines in crawl-300d-2M.vec - precomputed.
@@ -21,15 +23,22 @@ seen_words = set()
 # Store blacklisted words, in lowercase.
 blacklist = set()
 
-with open(blacklist_file, 'r') as file:
+def populate_blacklist(file_to_blacklist):
     """
-    Populate blacklist set, in lowercase.
+    Populate the blacklist set with words from the specified file, in lowercase.
+    Each line in the file should contain space-separated words.
+    
+    :param blacklist_file: Path to the file containing words to add to the blacklist.
+    :param blacklist: Set to which the words will be added.
     """
-    for line in file:
-        # Blacklist file is multiple lines of space-separated words.
-        words = line.strip().split(" ")
-        lowercase_words = [word.lower() for word in words]
-        blacklist.update(lowercase_words)
+    with open(file_to_blacklist, 'r') as file:
+        for line in file:
+            words = line.strip().split(" ")
+            lowercase_words = [word.lower() for word in words]
+            blacklist.update(lowercase_words)
+
+populate_blacklist(blacklist_file)
+populate_blacklist(misspellings_file)
 
 def is_not_blacklisted(word):
     """
@@ -39,11 +48,15 @@ def is_not_blacklisted(word):
 
 def is_unseen(word):
     """
-    Filter out duplicate words with varying upper-
+    1. Filter out duplicate words with varying upper-
     and lower-case. e.g. "TEST" and "test" should be
     considered duplicates.
+
+    2. Filter out unicode characters that look like the 
+    standard alphabet but aren't. e.g. е instead of e.
     """
-    word_lower = word.lower()
+    normalized_word = unicodedata.normalize('NFKC', word)
+    word_lower = normalized_word.lower()
     if word_lower not in seen_words:
         seen_words.add(word_lower)
         return True
