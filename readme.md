@@ -60,9 +60,11 @@ I hope you enjoy exploring the English language with DictionWave! For implementa
 
     *  I manually assembled my own blacklist file, but since it is primarily a list of slurs and obscenities I did not wish to host it in this repository. If you would like to use it, please contact me.
 
-4. Run `python filter_embeddings.py`. First, this filters out duplicates, redundant words, and any blacklisted words from your dataset. Then, it saves the embeddings to a `embeddings.pkl` file for later use. You may need to change the `input_file` variable name to match your word vectors filename.
+4. Run `estimate_misspellings.py` to identify possible misspellings in the dataset. You may need to change the `input_file` variable name to match your word vectors filename.
 
-    * My combination of filters reduced the 2 million word source file to 1,240,641 words at the last count. I am going to continuing trying to bring this number down, as there is a still lot of redundancy in there, such as misspellings. A cleaner dataset will let DictionWave run faster and return better results.
+4. Run `python filter_embeddings.py`. First, this filters out duplicates, redundant words, any blacklisted words, and any estimated misspellings from your dataset. Then, it saves the embeddings to a `embeddings.pkl` file for later use. You may need to change the `input_file` variable name to match your word vectors filename.
+
+    * My combination of filters reduced the 2 million word source file to 1,201,472 words at the last count. However, more work can be done on this: there is a still lot of redundancy in there, such as misspellings. A cleaner dataset will let DictionWave run faster and return better results.
     
     * (Optional) If you run this script yourself, you may wish to set `total_number_of_words` in `similarity_core.py` to be equal to the number of words `filter_embeddings.py` tells you are left in the input, so the loading bars are configured correctly. Precomputing this number saves time when loading the embeddings later on.
 
